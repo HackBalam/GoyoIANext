@@ -1,229 +1,228 @@
-# 🚀 Monad 0x Swap dApp
+[README (1).md](https://github.com/user-attachments/files/21957472/README.1.md)
+# GoyoIA Next — Monad 0x Swap dApp
 
-Una aplicación descentralizada (dApp) moderna para intercambio de tokens en **Monad Testnet** usando la **0x Swap API v2**. Construida con **Next.js 15**, **React 19**, **wagmi**, y **RainbowKit**.
+Aplicación **dApp** para hacer *swaps* de tokens en **Monad Testnet** usando **0x Swap API v2**. Construida con **Next.js 15**, **React 19**, **TypeScript**, **wagmi/viem** y **RainbowKit**, con UI en **Tailwind + shadcn/ui** y soporte **PWA**.
 
-![Monad](https://img.shields.io/badge/Network-Monad_Testnet-purple)
-![Next.js](https://img.shields.io/badge/Next.js-15-black)
-![React](https://img.shields.io/badge/React-19-blue)
-![0x API](https://img.shields.io/badge/0x_API-v2-green)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)
+> **Demo**: https://goyoia-next.vercel.app (si está disponible)  
+> **Licencia**: ISC
+
+---
 
 ## ✨ Características
 
-- 🔄 **Intercambio de tokens** usando 0x Swap API v2
-- ⚡ **Monad Testnet** completamente soportado (Chain ID: 10143)
-- 🎨 **UI moderna** con Tailwind CSS y shadcn/ui
-- 🔗 **Conexión de wallets** con RainbowKit
-- 📱 **PWA Ready** - Instala como app nativa
-- 🚀 **Gasless transactions** (próximamente)
-- 📊 **Precios en tiempo real** y cotizaciones precisas
-- 🔒 **Seguridad** con validaciones y manejo de errores
+- Intercambio de tokens vía **0x Swap API v2** (Permit2).
+- Soporte completo para **Monad Testnet** (Chain ID: `10143`).
+- Conexión de wallet con **RainbowKit** (WalletConnect, MetaMask, etc.).
+- UI moderna con **Tailwind CSS** y **shadcn/ui**.
+- **PWA ready** (instalable, offline básico).
+- Endpoints internos para `price` y `quote`.
+- Manejo de errores, validaciones y slippage.
 
-## 🎯 Información de Red
+---
 
-| Parámetro | Valor |
-|-----------|-------|
-| **Red** | Monad Testnet |
-| **Chain ID** | `10143` |
-| **Explorador** | [https://monad.explorer](https://monad.explorer) |
-| **0x Support** | ✅ Swap API disponible |
+## 🧱 Stack
 
-## 🛠️ Tecnologías
+- **Frontend:** Next.js 15, React 19, TypeScript
+- **Web3:** wagmi v2, viem, RainbowKit
+- **UI:** Tailwind CSS, shadcn/ui, Lucide React
+- **API:** 0x Swap API v2
+- **PWA:** next-pwa
 
-- **Frontend**: Next.js 15, React 19, TypeScript
-- **Web3**: wagmi v2, viem, RainbowKit
-- **UI**: Tailwind CSS, shadcn/ui, Lucide React
-- **APIs**: 0x Swap API v2 con Permit2
-- **PWA**: next-pwa para funcionalidad offline
+---
 
-## 🚀 Inicio Rápido
-
-### 1. Clonar el repositorio
-
-```bash
-git clone https://github.com/HackBalam/GoyoIANext.git
-cd GoyoIANext
-```
-
-### 2. Instalar dependencias
-
-```bash
-npm install
-# o
-yarn install
-# o
-pnpm install
-```
-
-### 3. Configurar variables de entorno
-
-Crea un archivo `.env.local`:
-
-```env
-NEXT_PUBLIC_ZEROEX_API_KEY=tu_api_key_aqui
-```
-
-> 📝 **Obtén tu API key**: [0x Dashboard](https://dashboard.0x.org/)
-
-### 4. Ejecutar en desarrollo
-
-```bash
-npm run dev
-```
-
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
-
-## 📁 Estructura del Proyecto
+## 🗺️ Estructura del proyecto
 
 ```
 src/
-├── app/
-│   ├── api/
-│   │   ├── price/route.ts      # Endpoint para precios
-│   │   └── quote/route.ts      # Endpoint para cotizaciones
-│   ├── layout.tsx              # Layout principal
-│   └── page.tsx                # Página home
-├── components/
-│   ├── ui/                     # Componentes UI base
-│   ├── web3/
-│   │   ├── SwapErc20Modal.tsx  # Modal principal de swap
-│   │   └── SwitchChainModal.tsx # Modal cambio de red
-│   ├── ConnectButton.tsx       # Botón conectar wallet
-│   ├── ContextProvider.tsx     # Providers Web3
-│   └── PWAInstall.tsx          # Componente PWA
-├── lib/
-│   ├── constants.ts            # Tokens y configuración
-│   └── wagmi.ts               # Configuración wagmi
-└── types/
-    └── index.ts               # Tipos TypeScript
+  app/
+    api/
+      price/route.ts      # Endpoint de precios
+      quote/route.ts      # Endpoint de cotizaciones
+    layout.tsx            # Layout principal
+    page.tsx              # Página principal
+  components/
+    ui/                   # Componentes base (shadcn)
+    web3/
+      SwapErc20Modal.tsx  # Modal principal de swap
+      SwitchChainModal.tsx# Cambio de red
+    ConnectButton.tsx
+    ContextProvider.tsx   # Providers (wagmi, RainbowKit, etc.)
+    PWAInstall.tsx        # Componente de instalación PWA
+  lib/
+    constants.ts          # Lista de tokens, chain config
+    wagmi.ts              # Config wagmi
+types/
+  index.ts
+scripts/
+  generate-icons.js       # Generación de íconos para PWA
 ```
 
-## 🎮 Uso
+---
 
-### 1. Conectar Wallet
-- Haz clic en "Connect Wallet"
-- Selecciona tu wallet preferida (MetaMask, WalletConnect, etc.)
-- Cambia a Monad Testnet si es necesario
+## 🔑 Variables de entorno
 
-### 2. Realizar Swap
-- Selecciona el token a vender y la cantidad
-- Elige el token que deseas comprar
-- Revisa la cotización y los fees
-- Aprueba el allowance si es necesario
-- Confirma la transacción
+Crea un archivo `.env.local` en la raíz (o usa el ya provisto `.env.example` como base):
 
-### 3. Monitorear Transacciones
-- Todas las transacciones se pueden ver en [Monad Explorer](https://monad.explorer)
-- Recibirás notificaciones del estado
+```bash
+NEXT_PUBLIC_ZEROEX_API_KEY=tu_api_key_de_0x
+```
 
-## 🔧 Scripts Disponibles
+> Consigue tu API Key en el dashboard de 0x. **No** la publiques en el repo.
+
+En Vercel, añade la misma variable en **Project → Settings → Environment Variables**.
+
+---
+
+## ▶️ Puesta en marcha (local)
+
+```bash
+# 1) Clonar
+git clone https://github.com/HackBalam/GoyoIANext.git
+cd GoyoIANext
+
+# 2) Instalar deps
+npm install
+# o: yarn install / pnpm install
+
+# 3) Variables de entorno
+cp .env.example .env.local
+# edita .env.local con tu NEXT_PUBLIC_ZEROEX_API_KEY
+
+# 4) Ejecutar en dev
+npm run dev
+# abre http://localhost:3000
+```
+
+---
+
+## 🚀 Despliegue en Vercel
+
+### Opción A: desde tu máquina (Vercel CLI)
+
+1. Instala y autentícate:
+   ```bash
+   npm i -g vercel
+   vercel login
+   ```
+2. Enlaza el proyecto (en la carpeta del repo):
+   ```bash
+   vercel
+   # responde los prompts (Framework: Next.js detectado automáticamente)
+   ```
+3. Configura variables:
+   ```bash
+   vercel env add NEXT_PUBLIC_ZEROEX_API_KEY
+   # pega el valor de tu API key de 0x
+   ```
+4. Despliega:
+   ```bash
+   # despliegue previo (Preview)
+   vercel
+
+   # despliegue a producción
+   vercel --prod
+   ```
+> Vercel detecta Next.js y usa `npm run build` automáticamente.
+
+### Opción B: importando el repo (GitHub → Vercel)
+
+1. Asegúrate de que el repo esté en GitHub (`HackBalam/GoyoIANext`).  
+2. En Vercel, **New Project → Import Git Repository**.  
+3. Framework **Next.js** (auto), Build Command `next build` (auto).  
+4. Añade `NEXT_PUBLIC_ZEROEX_API_KEY` en **Environment Variables**.  
+5. **Deploy**. Cada push a `main` dispara deploy.
+
+---
+
+## 🧩 API interna
+
+### `/api/price`
+```
+GET /api/price?chainId=10143&sellToken=0x...&buyToken=0x...&sellAmount=1000000000000000000
+```
+
+### `/api/quote`
+```
+GET /api/quote?chainId=10143&sellToken=0x...&buyToken=0x...&sellAmount=1000000000000000000
+```
+
+> Ajusta `sellAmount` en **wei** y usa direcciones reales de tokens en Monad Testnet.
+
+---
+
+## 🪙 Red y tokens
+
+- **Red:** Monad Testnet
+- **Chain ID:** `10143`
+- **Explorador:** https://monad.explorer/
+- **Tokens (ejemplo):** WMON (18), USDC (6), DAI (18)  
+  > ⚠️ Las direcciones en `lib/constants.ts` son *placeholders*—reemplázalas por las reales.
+
+---
+
+## 🧪 Scripts útiles
 
 ```bash
 # Desarrollo
 npm run dev
 
-# Construir para producción
-npm run build
-
-# Ejecutar en producción
-npm run start
-
-# Linting
+# Lint
 npm run lint
 
-# Generar iconos PWA
+# Build de producción
+npm run build
+
+# Arranque en prod (Node)
+npm run start
+
+# Generar íconos PWA
 node scripts/generate-icons.js
 ```
 
-## 🎯 Tokens Soportados
+---
 
-| Token | Symbol | Decimals | Red |
-|-------|--------|----------|-----|
-| Wrapped Monad | WMON | 18 | Monad |
-| USD Coin | USDC | 6 | Monad |
-| Dai Stablecoin | DAI | 18 | Monad |
+## 🔒 Seguridad
 
-> ⚠️ **Nota**: Las direcciones de contratos son placeholders y deben actualizarse con las direcciones reales de Monad.
-
-## 🔄 API Endpoints
-
-### Price Endpoint
-```
-GET /api/price?chainId=10143&sellToken=0x...&buyToken=0x...&sellAmount=1000000000000000000
-```
-
-### Quote Endpoint
-```
-GET /api/quote?chainId=10143&sellToken=0x...&buyToken=0x...&sellAmount=1000000000000000000
-```
-
-## 🛡️ Seguridad
-
-- ✅ Validación de inputs y parámetros
-- ✅ Manejo seguro de allowances
-- ✅ Verificación de balances
-- ✅ Protección contra slippage excesivo
-- ✅ Rate limiting en APIs
-- ⚠️ **Nunca compartir tu API key públicamente**
-
-## 📱 PWA Features
-
-- 📲 **Instalación**: Instala la dApp como app nativa
-- 🔄 **Offline**: Funcionalidad básica sin conexión
-- 🎨 **Iconos adaptativos** para diferentes dispositivos
-- 📋 **Manifest** optimizado para stores
-
-## 🚧 Roadmap
-
-- [ ] **Gasless Transactions** - Swaps sin gas fees
-- [ ] **Multi-chain Support** - Ethereum, Polygon, etc.
-- [ ] **Advanced Trading** - Límites, DCA, etc.
-- [ ] **Analytics Dashboard** - Historial y estadísticas
-- [ ] **Token Lists** - Soporte para listas personalizadas
-- [ ] **MEV Protection** - Protección contra front-running
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crea tu feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push al branch (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📚 Documentación Adicional
-
-- 📖 [CLAUDE.md](./CLAUDE.md) - Tutorial completo de implementación
-- 📋 [README-REOWN.md](./README-REOWN.md) - Documentación Reown/WalletConnect
-- 🔗 [0x API Documentation](https://docs.0x.org/)
-- 🌐 [Monad Documentation](https://docs.monad.xyz/)
-
-## ⚠️ Disclaimer
-
-Este proyecto está en **desarrollo activo** y es para **fines educativos y de testnet**. 
-
-- ⚠️ **No usar en mainnet** sin testing exhaustivo
-- 🧪 **Solo Monad Testnet** por ahora
-- 💡 **Direcciones de tokens son placeholders**
-- 🔒 **Auditar antes de usar en producción**
-
-## 📞 Soporte
-
-¿Tienes preguntas o necesitas ayuda?
-
-- 🐛 [Reportar bugs](https://github.com/HackBalam/GoyoIANext/issues)
-- 💬 [Discusiones](https://github.com/HackBalam/GoyoIANext/discussions)
-- 📧 Email: hackbalam@ejemplo.com
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia ISC. Ver el archivo [LICENSE](LICENSE) para más detalles.
+- Valida inputs y límites de **slippage**.
+- Usa **allowances** mínimos necesarios.
+- No expongas tu API key en el front ni en el repo.
+- Añade **rate limiting** en endpoints.
+- Revisa permisos en carteras y revoca allowances cuando no se usen.
 
 ---
 
-<div align="center">
+## 🛣️ Roadmap (ideas)
 
-**Construido con ❤️ para la comunidad Monad**
+- Gasless transactions
+- Multi-chain (Ethereum, Polygon, …)
+- Órdenes avanzadas (Límites, DCA)
+- Analytics/Historial
+- Token Lists personalizadas
+- MEV protection
 
-[🌐 Website](https://goyoia-next.vercel.app) | [📱 Demo](https://goyoia-next.vercel.app) | [📖 Docs](./CLAUDE.md)
+---
 
-</div>
+## 🤝 Cómo contribuir
+
+1. Haz fork
+2. Crea rama de feature: `git checkout -b feature/mi-feature`
+3. Commits: `git commit -m "feat: agrega X"`
+4. Push: `git push origin feature/mi-feature`
+5. Abre Pull Request
+
+---
+
+## 📄 Documentación relacionada
+
+- `CLAUDE.md` — tutorial de implementación y notas.
+- `README-REOWN.md` — docs de Reown/WalletConnect.
+
+---
+
+## 📄 Licencia
+
+Este proyecto usa **ISC**. Ver `LICENSE` para más detalles.
+
+---
+
+Construido con ❤️ para la comunidad Monad
