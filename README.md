@@ -12,7 +12,7 @@ Aplicación **dApp** para hacer *swaps* de tokens en **Monad Testnet** usando **
 
 - Intercambio de tokens vía **0x Swap API v2** (Permit2).
 - Soporte completo para **Monad Testnet** (Chain ID: `10143`).
-- Conexión de wallet con **RainbowKit** (WalletConnect, MetaMask, etc.).
+- Conexión de wallet con **Reown** (WalletConnect, MetaMask, gmail.).
 - UI moderna con **Tailwind CSS** y **shadcn/ui**.
 - **PWA ready** (instalable, offline básico).
 - Endpoints internos para `price` y `quote`.
