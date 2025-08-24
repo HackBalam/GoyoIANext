@@ -1,22 +1,16 @@
 'use client';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
-import { RainbowKitProvider, ConnectButton } from '@rainbow-me/rainbowkit';
 import { Toaster } from 'sonner';
-import { useAccount, useChainId } from 'wagmi';
+import { useAppKitAccount, useAppKitNetwork } from '@reown/appkit/react';
 
-import { config } from '@/lib/wagmi';
+import { ConnectButton } from '@/components/ConnectButton';
 import SwapErc20Modal from '@/components/web3/SwapErc20Modal';
 import SwitchChainModal from '@/components/web3/SwitchChainModal';
-
-import '@rainbow-me/rainbowkit/styles.css';
-
-const queryClient = new QueryClient();
+import { PWAInstall } from '@/components/PWAInstall';
 
 function DAppContent() {
-  const { address, isConnected } = useAccount();
-  const chainId = useChainId();
+  const { address, isConnected } = useAppKitAccount();
+  const { chainId } = useAppKitNetwork();
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-purple-400 to-pink-400 p-8">
@@ -27,8 +21,11 @@ function DAppContent() {
               Monad 0x Swap
             </h1>
             <p className="text-gray-600">
-              Token swap powered by 0x API on Monad testnet
+              Token swap powered by 0x API on Sepolia testnet
             </p>
+            <div className="flex justify-center mt-2">
+              <PWAInstall />
+            </div>
           </div>
           
           <div className="space-y-4">
@@ -38,12 +35,12 @@ function DAppContent() {
             
             {isConnected && (
               <div className="space-y-3">
-                {chainId === 10143 ? (
-                  <SwapErc20Modal userAddress={address} />
+                {chainId === 11155111 ? (
+                  <SwapErc20Modal userAddress={address as `0x${string}`} />
                 ) : (
                   <SwitchChainModal
-                    buttonText="Switch to Monad Testnet"
-                    requiredChainId={10143}
+                    buttonText="Switch to Sepolia Testnet"
+                    requiredChainId={11155111}
                   />
                 )}
               </div>
@@ -63,13 +60,9 @@ function DAppContent() {
 
 export default function Home() {
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
-          <DAppContent />
-          <Toaster position="top-right" />
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <>
+      <DAppContent />
+      <Toaster position="top-right" />
+    </>
   );
 }

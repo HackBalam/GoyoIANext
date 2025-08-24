@@ -63,7 +63,7 @@ type SwapErc20ModalProps = {
 
 export default function SwapErc20Modal({ userAddress }: SwapErc20ModalProps) {
   const [isMounted, setIsMounted] = useState(false);
-  const [sellToken, setSellToken] = useState('mon');
+  const [sellToken, setSellToken] = useState('eth');
   const [sellAmount, setSellAmount] = useState('');
   const [buyToken, setBuyToken] = useState('usdc');
   const [buyAmount, setBuyAmount] = useState('');
@@ -82,12 +82,9 @@ export default function SwapErc20Modal({ userAddress }: SwapErc20ModalProps) {
     sellTaxBps: '0',
   });
 
-  const chainId = useChainId() || 10143;
+  const chainId = useChainId() || 11155111; // Sepolia for testing
 
   const tokensByChain = (chainId: number) => {
-    if (chainId === 10143) {
-      return MONAD_TOKENS_BY_SYMBOL;
-    }
     return MONAD_TOKENS_BY_SYMBOL;
   };
 
@@ -135,17 +132,20 @@ export default function SwapErc20Modal({ userAddress }: SwapErc20ModalProps) {
 
     const controller = new AbortController();
     
-    const params = {
-      chainId: '10143',
+    // Filter out undefined values for cleaner API calls
+    const params: Record<string, string> = {
+      chainId: '11155111', // Sepolia for testing
       sellToken: sellTokenObject.address,
       buyToken: buyTokenObject.address,
-      sellAmount: parsedSellAmount,
-      taker: userAddress,
-      swapFeeRecipient: FEE_RECIPIENT,
-      swapFeeBps: AFFILIATE_FEE,
-      swapFeeToken: buyTokenObject.address,
-      tradeSurplusRecipient: FEE_RECIPIENT,
     };
+
+    if (parsedSellAmount) {
+      params.sellAmount = parsedSellAmount;
+    }
+
+    if (userAddress) {
+      params.taker = userAddress;
+    }
 
     async function fetchPrice() {
       try {
@@ -263,7 +263,7 @@ export default function SwapErc20Modal({ userAddress }: SwapErc20ModalProps) {
                   )}
                   <Select
                     onValueChange={handleSellTokenChange}
-                    defaultValue="mon"
+                    defaultValue="eth"
                   >
                     <SelectTrigger className="w-1/4">
                       <SelectValue placeholder="Vender" />
@@ -452,7 +452,7 @@ function ApproveOrReviewButton({
     );
   }
 
-  // For native tokens (MON), skip allowance check entirely
+  // For native tokens (ETH), skip allowance check entirely
   if (sellTokenAddress === "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE") {
     return (
       <Button
@@ -529,7 +529,7 @@ function ConfirmSwapButton({
     const controller = new AbortController();
     
     const params = {
-      chainId: '10143',
+      chainId: '11155111', // Sepolia for testing
       sellToken: price.sellToken,
       buyToken: price.buyToken,
       sellAmount: price.sellAmount,
@@ -678,7 +678,7 @@ function ConfirmSwapButton({
               value: quote?.transaction.value
                 ? BigInt(quote.transaction.value)
                 : undefined,
-              chainId: 10143,
+              chainId: 11155111, // Sepolia for testing
             });
           }
         }}
@@ -689,7 +689,7 @@ function ConfirmSwapButton({
         <div className="pt-4 flex flex-col items-center">
           <Link
             className="hover:text-accent flex items-center gap-x-1.5"
-            href={`https://testnet.monadexplorer.com/tx/${hash}`}
+            href={`https://sepolia.etherscan.io/tx/${hash}`}
             target="_blank"
             rel="noopener noreferrer"
           >

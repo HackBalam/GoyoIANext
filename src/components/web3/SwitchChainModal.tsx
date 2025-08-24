@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSwitchChain } from 'wagmi';
+import { useAppKitNetwork } from '@reown/appkit/react';
+import { monadTestnet } from '@/lib/wagmi';
+import { sepolia } from 'viem/chains';
 
 import {
   Dialog,
@@ -22,18 +24,7 @@ export default function SwitchChainModal({
   requiredChainId: number;
 }) {
   const [isMounted, setIsMounted] = useState(false);
-  const { chains, switchChain } = useSwitchChain({
-    mutation: {
-      onSuccess(data) {
-        console.log(data);
-        toast.success(`Cambiado a la cadena ${data.name}`);
-        return null;
-      },
-    },
-  });
-  const [selectedChain] = chains.filter(
-    (chain) => chain.id === requiredChainId
-  );
+  const { switchNetwork } = useAppKitNetwork();
 
   useEffect(() => {
     if (!isMounted) {
@@ -42,8 +33,14 @@ export default function SwitchChainModal({
   }, [isMounted]);
 
   function handleSwitchChain() {
-    switchChain({ chainId: selectedChain.id });
-    toast.info(`Acepta el cambio a la cadena ${selectedChain.name}`);
+    try {
+      const targetNetwork = requiredChainId === 11155111 ? sepolia : monadTestnet;
+      switchNetwork(targetNetwork);
+      toast.success(`Cambiando a la cadena ${targetNetwork.name}`);
+    } catch (error) {
+      console.error('Error switching chain:', error);
+      toast.error('Error al cambiar de cadena');
+    }
   }
 
   return (
@@ -55,11 +52,11 @@ export default function SwitchChainModal({
         <DialogHeader>
           <DialogTitle className="text-center">Cambiar Cadena</DialogTitle>
           <DialogDescription>
-            {`Esta acción solo está habilitada para ${selectedChain?.name || 'Monad'}. Necesitas cambiar de cadena`}
+            {`Esta acción solo está habilitada para ${requiredChainId === 11155111 ? sepolia.name : monadTestnet.name}. Necesitas cambiar de cadena`}
           </DialogDescription>
         </DialogHeader>
         <Button onClick={handleSwitchChain}>
-          {`Cambiar a ${selectedChain?.name || 'Monad'}`}
+          {`Cambiar a ${requiredChainId === 11155111 ? sepolia.name : monadTestnet.name}`}
         </Button>
       </DialogContent>
     </Dialog>
